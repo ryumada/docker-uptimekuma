@@ -1,0 +1,6 @@
+# Secrets
+.env
+
+# Data
+data/*
+!data/README.md

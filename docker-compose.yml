@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: always
+    ports:
+      - "${PORT}:3001"
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    environment:
+      - UMASK=0022
+    networks:
+      - kuma_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  kuma_network:
+    driver: bridge
