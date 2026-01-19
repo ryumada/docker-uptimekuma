@@ -4,7 +4,7 @@ services:
     container_name: uptime-kuma
     restart: always
     ports:
-      - "${PORT}:3001"
+      - ${PORT}:${PORT}
     volumes:
       - ./data:/app/data
     env_file:
@@ -14,7 +14,7 @@ services:
     networks:
       - kuma_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      test: ["CMD", "curl", "-f", "http://localhost:${PORT}"]
       interval: 30s
       retries: 3
       start_period: 10s
